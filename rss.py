@@ -17,6 +17,7 @@ try:
     check_interval = int(os.environ.get("INTERVAL", 10))   # Check Interval in seconds.  
     max_instances = int(os.environ.get("MAX_INSTANCES", 3))   # Max parallel instance to be used.
     mirr_cmd = os.environ.get("MIRROR_CMD", "/qbmirror1")    #if you have changed default cmd of mirror bot, replace this.
+    leech_cmd = os.environ.get("LEECH_CMD", "/leech")
 except Exception as e:
     print(e)
     print("One or more variables missing or have error. Exiting !")
@@ -37,23 +38,53 @@ def create_feed_checker(feed_url):
             return
         entry = FEED.entries[0]
         if entry.id != db.get_link(feed_url).link:
-                       # ↓ Edit this message as your needs.
+            
+            # ↓ Edit this message as your needs.
             if "eztv.re" in entry.link:   
-                message = f"{mirr_cmd} {entry.torrent_magneturi}"
+                message = f"{mirr_cmd} {entry.torrent_magneturi}"   
+                message3 = f"**📂 FileName:** `{entry.torrent_filename}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.torrent_magneturi}`"    
             elif "yts.mx" in entry.link:
-                message = f"{mirr_cmd} {entry.links[1]['href']}"
+                message = f"{mirr_cmd} {entry.links[1]['href']}"   
+                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.links[1]['href']}`" 
+               # message
             elif "rarbg" in entry.link:
-                message = f"{mirr_cmd} {entry.link}"
+                message = f"{mirr_cmd} {entry.link}"   
+                message3 = f"**📂 FileName:** `{entry.title.replace(".", " ")}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.link}`" 
+               # message
             elif "watercache" in entry.link:
-                message = f"{mirr_cmd} {entry.link}"
-            elif "limetorrents.pro" in entry.link:
-                message = f"{mirr_cmd} {entry.link}"
-            elif "etorrent.click" in entry.link:
-                message = f"{mirr_cmd} {entry.link}"
+                message = f"{mirr_cmd} {entry.link}"   
+                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.link}`" 
+               # message
+            elif "limetorrents" in entry.link:
+                message = f"{mirr_cmd} {entry.links[1]['href']}"   
+                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.links[1]['href']}`" 
+               # message
+            elif "torlock.com" in entry.link:
+                message = f"{mirr_cmd} {entry.links[1]['href']}"   
+                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.links[1]['href']}`" 
+               # message
+            elif "erai-raws.info" in entry.link:
+                message = f"{mirr_cmd} {entry.link}"    
+                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.link}`" 
+               # message
+            elif "nyaa.si" in entry.link:
+                message = f"{mirr_cmd} {entry.link}"   
+                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**💾 FileSize:** `{entry.nyaa_size}`\n\n**📥 DL Link:** `{entry.link}`" 
+                message2 = f"{leech_cmd} {entry.link}"
+            elif "psa" in entry.link:
+                message = f"Can't Mirror"   
+                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.link}`" 
+               # message
             else:
                 message = f"{mirr_cmd} {entry.link}"
             try:
                 msg = app.send_message(log_channel, message)
+                if message2:
+                     msg2 = app.send_message(log_channel, message2)
+                if message3:
+                     msg3 = app.send_message(log_channel2, message3)
+                else:
+                     pass
                 db.update_link(feed_url, entry.id)
             except FloodWait as e:
                 print(f"FloodWait: {e.x} seconds")
