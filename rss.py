@@ -14,9 +14,10 @@ try:
     feed_urls = list(set(i for i in os.environ["FEED_URLS"].split("|")))  # RSS Feed URL of the site.
     bot_token = os.environ["BOT_TOKEN"]   # Get it by creating a bot on https://t.me/botfather
     log_channel = int(os.environ["LOG_CHANNEL"])   # Telegram Channel ID where the bot is added and have write permission. You can use group ID too.
+    log_channel2 = int(os.environ["LOG_CHANNEL2"])
     check_interval = int(os.environ.get("INTERVAL", 10))   # Check Interval in seconds.  
     max_instances = int(os.environ.get("MAX_INSTANCES", 3))   # Max parallel instance to be used.
-    mirr_cmd = os.environ.get("MIRROR_CMD", "/qbmirror1")    #if you have changed default cmd of mirror bot, replace this.
+    mirr_cmd = os.environ.get("MIRROR_CMD", "/qbmir4")    #if you have changed default cmd of mirror bot, replace this.
     leech_cmd = os.environ.get("LEECH_CMD", "/leech")
 except Exception as e:
     print(e)
