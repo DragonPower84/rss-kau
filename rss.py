@@ -49,8 +49,10 @@ def create_feed_checker(feed_url):
                 message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.links[1]['href']}`" 
                # message
             elif "rarbg" in entry.link:
-                message = f"{mirr_cmd} {entry.link}"   
-                message3 = f"**📂 FileName:** `{entry.title.replace(".", " ")}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.link}`" 
+                message = f"{mirr_cmd} {entry.link}"
+                filename = {entry.title}
+                filename.replace(".", " ")
+                message3 = f"**📂 FileName:** `{filename}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.link}`" 
                # message
             elif "watercache" in entry.link:
                 message = f"{mirr_cmd} {entry.link}"   
