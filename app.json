@@ -34,6 +34,11 @@
             "value": "",
             "required": true
         },
+        "LOG_CHANNEL2": {
+            "description": "Telegram Channel/group/user ID where the bot have to send RSS Feeds",
+            "value": "",
+            "required": true
+        },
         "FEED_URLS": {
             "description": "List of URLs of RSS Feed, separated by | vertical bar",
             "value": "",
