@@ -18,7 +18,7 @@ try:
     check_interval = int(os.environ.get("INTERVAL", 10))   # Check Interval in seconds.  
     max_instances = int(os.environ.get("MAX_INSTANCES", 3))   # Max parallel instance to be used.
     mirr_cmd = os.environ.get("MIRROR_CMD", "/qbmir4")    #if you have changed default cmd of mirror bot, replace this.
-    leech_cmd = os.environ.get("LEECH_CMD", "/leech")
+    # leech_cmd = os.environ.get("LEECH_CMD", "/leech")
 except Exception as e:
     print(e)
     print("One or more variables missing or have error. Exiting !")
@@ -39,44 +39,43 @@ def create_feed_checker(feed_url):
             return
         entry = FEED.entries[0]
         if entry.id != db.get_link(feed_url).link:
-            
             # ↓ Edit this message as your needs.
             if "eztv.re" in entry.link:   
                 message = f"{mirr_cmd} {entry.torrent_magneturi}"   
                 message3 = f"**📂 FileName:** `{entry.torrent_filename}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.torrent_magneturi}`"    
             elif "yts.mx" in entry.link:
                 message = f"{mirr_cmd} {entry.links[1]['href']}"   
-                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.links[1]['href']}`" 
+                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.links[1]['href']}`\n\n#YTSMX #YTS" 
                # message
             elif "rarbg" in entry.link:
                 message = f"{mirr_cmd} {entry.link}"
                 filename = {entry.title}
                 filename.replace(".", " ")
-                message3 = f"**📂 FileName:** `{filename}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.link}`" 
+                message3 = f"**📂 FileName:** `{filename}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.link}`\n\n#RARBG" 
                # message
             elif "watercache" in entry.link:
                 message = f"{mirr_cmd} {entry.link}"   
-                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.link}`" 
+                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.link}`\n\n#TORRENTGALAXY" 
                # message
             elif "limetorrents" in entry.link:
                 message = f"{mirr_cmd} {entry.links[1]['href']}"   
-                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.links[1]['href']}`" 
+                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.links[1]['href']}`\n\n#LIMETORRENTS" 
                # message
             elif "torlock.com" in entry.link:
                 message = f"{mirr_cmd} {entry.links[1]['href']}"   
-                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.links[1]['href']}`" 
+                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.links[1]['href']}`\n\n#TORLOCK" 
                # message
             elif "erai-raws.info" in entry.link:
                 message = f"{mirr_cmd} {entry.link}"    
-                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.link}`" 
+                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.link}`\n\n#ERAIRAWS #ERAI" 
                # message
             elif "nyaa.si" in entry.link:
                 message = f"{mirr_cmd} {entry.link}"   
-                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**💾 FileSize:** `{entry.nyaa_size}`\n\n**📥 DL Link:** `{entry.link}`" 
-                message2 = f"{leech_cmd} {entry.link}"
+                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**💾 FileSize:** `{entry.nyaa_size}`\n\n**📥 DL Link:** `{entry.link}`\n\n#NYAASI #NYAA" 
+                # message2 = f"{leech_cmd} {entry.link}"
             elif "psa" in entry.link:
                 message = f"Can't Mirror"   
-                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.link}`" 
+                message3 = f"**📂 FileName:** `{entry.title}`\n\n**📝 Published:** {entry.published}\n\n**📥 DL Link:** `{entry.link}`\n\n#PSA" 
                # message
             else:
                 message = f"{mirr_cmd} {entry.link}"
